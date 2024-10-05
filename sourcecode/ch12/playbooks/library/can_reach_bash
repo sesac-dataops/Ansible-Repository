@@ -1,0 +1,22 @@
+#!/bin/bash
+# WANT_JSON
+
+# 파일에서 변수를 읽는다
+host=`jq -r .host < $1`
+port=`jq -r .port < $1`
+timeout=`jq -r .timeout < $1`
+
+# 기본 타임아웃은 3이다
+if [[ $timeout = null ]]; then
+    timeout=3
+fi
+
+# 호스트에 연결할 수 있는지 확인한다
+nc -z -w $timeout $host $port
+
+# 성공 또는 실패를 기반으로 출력
+if [ $? -eq 0 ]; then
+    echo '{"changed": false}'
+else
+    echo "{\"failed\": true, \"msg\": \"could not reach $host:$port\"}"
+fi

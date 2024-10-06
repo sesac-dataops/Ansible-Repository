@@ -14,7 +14,7 @@
 ---
 
 ```text
-Network-Basic
+Ansible-Repository
 │
 └──  유저명(깃허브 아이디명)
        └── 1장
